@@ -1,0 +1,60 @@
+/*Client 2*/
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+      <h1>Client 2</h1><br/>
+      <textarea id="textArea"></textarea><br/><br/><br/>
+    Message: <input type="text" id="inp">
+    <button onclick="send()">Send</button>
+    
+    <script type="text/javascript">
+
+        var SERVER_URL = 'ws://ipAddress:8100'; //ip address of system where surver is running
+
+        function connect() {
+            ws = new WebSocket(SERVER_URL, []);
+            ws.onmessage = handleMessageReceived;
+            ws.onopen = handleConnected;
+            ws.onerror = handleError;
+        }
+
+
+        function handleMessageReceived(data) {
+            message = data.data;
+            console.log("Msg_From_Server: " + message);
+            document.getElementById('textArea').value = message;
+        }
+
+        function handleConnected(data) {
+            console.log("Connected";
+        }
+
+        function handleError(err) {
+            console.log("Error: ", err);
+        }
+        connect()
+
+        function send(){
+            var msg = document.getElementById('inp').value;
+            ws.send(msg)
+        }
+
+    </script>
+
+</body>
+<style type="text/css">
+    #textArea{
+        width: 100%;
+        height: 50%;
+        display: block;
+        margin-top: 5%;
+        border: 1px solid green;
+        color: white;
+        background-color: gray;
+    }
+</style>
+</html>
